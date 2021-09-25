@@ -1,7 +1,7 @@
 class Paint {
   constructor() {
     this.canvas = document.getElementById("broad");
-    this.canvas.width = window.innerWidth - 10;
+    this.canvas.width = window.innerWidth - 20;
     this.canvas.height = 650;
     this.ctx = this.canvas.getContext("2d");
     this.color = "#ff0000";
@@ -42,7 +42,7 @@ class Paint {
     this.startPos = this.getMousePos(event);
     this.drawing = true;
     this.image_tmp = new Image();
-    this.image_tmp.src = this.canvas.toDataURL();
+    this.image_tmp.src = this.canvas.toDataURL("image/bmg", 1.0);
   }
   mousemove(event) {
     let mousePos = this.getMousePos(event);
@@ -54,6 +54,14 @@ class Paint {
         case "line":
           this.setDrawLine();
           this.drawLine(this.startPos, mousePos);
+          break;
+        case "rect":
+          this.setDrawLine();
+          this.drawRect(this.startPos, mousePos);
+          break;
+        case "tria":
+          this.setDrawLine();
+          this.drawTraingle(this.startPos, mousePos);
           break;
       }
     }
@@ -75,6 +83,7 @@ class Paint {
     this.canvas.addEventListener("mousemove", (event) => this.mousemove(event));
     this.canvas.addEventListener("mouseup", (event) => this.mouseup(event));
   }
+  // ve ngau nhien
   drawLine(startPos, endPos) {
     this.ctx.lineWidth = this.lineWidth;
     this.ctx.strokeStyle = this.color;
@@ -83,6 +92,19 @@ class Paint {
     this.ctx.lineTo(endPos.x, endPos.y);
     this.ctx.lineJoin = "round";
     this.ctx.lineCap = "round";
+    this.ctx.stroke();
+  }
+  //ve hinh chu nhat
+  drawRect(startPos, endPos) {
+    this.ctx.lineWidth = this.lineWidth;
+    this.ctx.strokeStyle = this.color;
+    this.ctx.beginPath();
+    this.ctx.rect(
+      startPos.x,
+      startPos.y,
+      endPos.x - startPos.x,
+      endPos.y - startPos.y
+    );
     this.ctx.stroke();
   }
   storeCanvas() {
@@ -121,7 +143,13 @@ class Paint {
     }
   }
   setDrawLine() {
-    this.ctx.drawImage(this.image_tmp, 0, 0);
+    this.ctx.drawImage(
+      this.image_tmp,
+      0,
+      0,
+      this.canvas.width,
+      this.canvas.height
+    );
   }
   //save canvas
   save() {
@@ -136,7 +164,6 @@ class Paint {
     }
   }
 }
-
 var p = new Paint();
 p.loadCanvas();
 
@@ -149,4 +176,8 @@ function undo() {
 
 function save() {
   p.save();
+}
+
+function changeColor(clor) {
+  p.color = clor;
 }
