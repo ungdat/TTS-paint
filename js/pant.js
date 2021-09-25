@@ -1,8 +1,8 @@
 class Paint {
   constructor() {
     this.canvas = document.getElementById("broad");
-    this.canvas.width = 800;
-    this.canvas.height = 500;
+    this.canvas.width = window.innerWidth - 10;
+    this.canvas.height = 650;
     this.ctx = this.canvas.getContext("2d");
     this.color = "#ff0000";
     this.tool = "pen";
@@ -52,6 +52,7 @@ class Paint {
           this.drawLine(this.currentPos, mousePos);
           break;
         case "line":
+          this.setDrawLine();
           this.drawLine(this.startPos, mousePos);
           break;
       }
@@ -63,7 +64,9 @@ class Paint {
     this.ctx.stroke();
     this.ctx.closePath();
     //push in store
-    this.store_array.push(this.ctx.getImageData(0, 0, 800, 500));
+    this.store_array.push(
+      this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height)
+    );
     this.index += 1;
     this.storeCanvas();
   }
@@ -100,10 +103,13 @@ class Paint {
   }
   clear_canvas() {
     this.ctx.fillStyle = "#ffffff";
-    this.ctx.clearRect(0, 0, 800, 500);
-    this.ctx.fillRect(0, 0, 800, 500);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.storeCanvas();
+    this.store_array = [];
+    this.index = -1;
   }
+  //undo
   undo() {
     if (this.index <= 0) {
       this.clear_canvas();
@@ -115,7 +121,19 @@ class Paint {
     }
   }
   setDrawLine() {
-    this.ctx.drawImage(this.image_tmp, 0, 0, 800, 500);
+    this.ctx.drawImage(this.image_tmp, 0, 0);
+  }
+  //save canvas
+  save() {
+    if (window.navigator.msSaveBlob) {
+      window.navigator.msSaveBlob(this.canvas.msToBlob(), "canvas-image.png");
+    } else {
+      const a = document.createElement("a");
+      a.href = this.canvas.toDataURL();
+      a.download = "canvas-image.png";
+      a.click();
+      document.body.removeChild(a);
+    }
   }
 }
 
@@ -127,4 +145,8 @@ function changeTool(tool) {
 }
 function undo() {
   p.undo();
+}
+
+function save() {
+  p.save();
 }
