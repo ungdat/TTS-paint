@@ -19,24 +19,49 @@
   <body>
     <div class="container">
       <div class="tool">
-        <div class="pen" onclick="changeTool('pen')">
+        <button onclick="changeTool('pen')">
           <i class="fas fa-pen"></i>
-        </div>
-        <div class="line" onclick="changeTool('line')">
+        </button>
+        <br />
+        <button onclick="changeTool('line')">
           <i class="fas fa-slash"></i>
-        </div>
-        <div class="img"></div>
-        <div class="delete">
-          <i class="fas fa-eraser"></i>
-        </div>
+        </button>
+        <button onclick="changeTool('rect')"><div id="rect"></div></button>
+        <button onclick="changeTool('tria')"><div id="tria"></div></button>
+        <button onclick="changeTool('cir')"><div id="cir"></div></button>
+
         <div class="color">
-          <div class="red" onclick=""></div>
-          <div class="black" onclick=""></div>
-          <div class="blue" onclick=""></div>
+          <button
+            class="red"
+            style="background-color: red"
+            onclick="changeColor()"
+          ></button>
+          <button
+            class="black"
+            style="background-color: black"
+            onclick="changeColor()"
+          ></button>
+          <button
+            class="blue"
+            style="background-color: blue"
+            onclick="changeColor()"
+          ></button>
         </div>
-        <button onclick="undo()">Undo</button>
+        <input oninput="p.color = this.value" type="color" />
+        <div class="lineWidth">
+          <label>Line width</label>
+          <input
+            oninput="p.lineWidth = this.value"
+            value="5"
+            type="range"
+            min="1"
+            max="100"
+          />
+        </div>
+        <button class="undo" onclick="undo()">Undo</button>
+        <button class="undo" onclick="save()">Save</button>
       </div>
-      <div>
+      <div class="canvas">
         <canvas id="broad"></canvas>
       </div>
     </div>
