@@ -27,24 +27,26 @@
           <i class="fas fa-slash"></i>
         </button>
         <button onclick="changeTool('rect')"><div id="rect"></div></button>
-        <button onclick="changeTool('tria')"><div id="tria"></div></button>
-        <button onclick="changeTool('cir')"><div id="cir"></div></button>
-
         <div class="color">
           <button
             class="red"
             style="background-color: red"
-            onclick="changeColor()"
+            onclick="changeColor('#ff0000')"
           ></button>
           <button
             class="black"
             style="background-color: black"
-            onclick="changeColor()"
+            onclick="changeColor('#000000')"
           ></button>
           <button
             class="blue"
             style="background-color: blue"
-            onclick="changeColor()"
+            onclick="changeColor('#0000ff')"
+          ></button>
+          <button
+            class="blue"
+            style="background-color: white"
+            onclick="changeColor('#ffffff')"
           ></button>
         </div>
         <input oninput="p.color = this.value" type="color" />
