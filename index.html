@@ -19,11 +19,11 @@
   <body>
     <div class="container">
       <div class="tool">
-        <div class="pen">
+        <div class="pen" onclick="changeTool('pen')">
           <i class="fas fa-pen"></i>
         </div>
-        <div class="textbox">
-          <i class="fas fa-font"></i>
+        <div class="line" onclick="changeTool('line')">
+          <i class="fas fa-slash"></i>
         </div>
         <div class="img"></div>
         <div class="delete">
@@ -34,6 +34,7 @@
           <div class="black" onclick=""></div>
           <div class="blue" onclick=""></div>
         </div>
+        <button onclick="undo()">Undo</button>
       </div>
       <div>
         <canvas id="broad"></canvas>
