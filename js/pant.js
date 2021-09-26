@@ -143,6 +143,7 @@ class Paint {
     }
   }
   setDrawLine() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.drawImage(
       this.image_tmp,
       0,
